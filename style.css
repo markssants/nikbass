@@ -1,0 +1,3388 @@
+:root {
+    --primary-color: #D4AF37;
+    /* Metallic Gold */
+    --secondary-color: #F2C94C;
+    /* Bright Gold */
+    --bg-color: #0a0a0a;
+    --bg-dark: #050505;
+    --text-color: #ffffff;
+    --text-muted: #b3b3b3;
+    --font-main: 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* scroll-behavior: smooth; Removed to use JS control */
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.release-card {
+    background: #111;
+    padding: 40px;
+    border-radius: 20px;
+    margin: 30px auto;
+    max-width: 800px;
+    text-align: center;
+    border-top: 5px solid var(--primary-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.card-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+}
+
+.card-btn {
+    position: relative;
+    z-index: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    /* Replaced by animated border */
+    color: #888;
+    padding: 8px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    /* Animated Border Styles */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    overflow: hidden;
+    animation: gradient-angle 3s linear infinite;
+
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FFD700 var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            #FFD700 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine, transform, box-shadow, color;
+}
+
+.card-btn::before,
+.card-btn::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.card-btn::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0;
+    /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.card-btn::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            #FFD700,
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0;
+    /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.card-btn:hover {
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.card-btn.active {
+    animation-play-state: running;
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #FFA500;
+    color: #FFD700;
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px #333, 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.card-btn.active::before,
+.card-btn.active::after {
+    opacity: 0.4;
+    /* Show effects when active */
+}
+
+.release-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.release-card p {
+    margin-bottom: 20px;
+    color: #ccc;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.release-card p:last-child {
+    margin-bottom: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.highlight {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #000;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    color: #000;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--text-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--text-color);
+    color: var(--bg-dark);
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    padding: 10px 5px;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--text-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    position: relative;
+    isolation: isolate;
+}
+
+.nav-slider-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.nav-links a {
+    font-weight: 400;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary-color);
+}
+
+.btn-nav:hover,
+.btn-nav.active {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #000 !important;
+    border-color: transparent;
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    /* background: url('img/hero-bg.png') no-repeat center center; */
+    background: url('videos/tocando/miniatura.png') no-repeat center center/cover;
+    /* background-attachment: fixed; */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    object-fit: cover;
+}
+
+/* ... (lines 175-390 skipped) ... */
+
+/* Presskit Section */
+.presskit {
+    background: linear-gradient(45deg, #111, #1a1a1a);
+    background-attachment: fixed;
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(10, 10, 10, 0.3), var(--bg-color));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 5rem;
+    font-weight: 900;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    color: white;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 var(--secondary-color);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 var(--primary-color);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(10px, 9999px, 30px, 0);
+    }
+
+    20% {
+        clip: rect(80px, 9999px, 100px, 0);
+    }
+
+    40% {
+        clip: rect(10px, 9999px, 50px, 0);
+    }
+
+    60% {
+        clip: rect(60px, 9999px, 80px, 0);
+    }
+
+    80% {
+        clip: rect(120px, 9999px, 140px, 0);
+    }
+
+    100% {
+        clip: rect(30px, 9999px, 60px, 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(120px, 9999px, 140px, 0);
+    }
+
+    20% {
+        clip: rect(10px, 9999px, 30px, 0);
+    }
+
+    40% {
+        clip: rect(90px, 9999px, 110px, 0);
+    }
+
+    60% {
+        clip: rect(20px, 9999px, 50px, 0);
+    }
+
+    80% {
+        clip: rect(60px, 9999px, 80px, 0);
+    }
+
+    100% {
+        clip: rect(10px, 9999px, 40px, 0);
+    }
+}
+
+.hero p {
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+    margin-bottom: 40px;
+    color: var(--text-muted);
+}
+
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* About Section */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.about-img {
+    position: relative;
+}
+
+.about-img img {
+    border-radius: 10px;
+    filter: grayscale(20%) contrast(1.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.about-img img:hover {
+    transform: scale(1.05);
+}
+
+.agenda-image img {
+    transition: transform 0.3s ease;
+}
+
+.agenda-image img:hover {
+    transform: scale(1.05);
+}
+
+.img-border {
+    position: absolute;
+    top: 20px;
+    left: -20px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--primary-color);
+    z-index: -1;
+    border-radius: 10px;
+}
+
+.about-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    color: var(--text-muted);
+}
+
+.stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.stat-item h3 {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+}
+
+.stat-item p {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+/* Music Section */
+.music {
+    background-color: var(--bg-dark);
+}
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.music-item h3 {
+    margin-bottom: 15px;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Animated Border Properties */
+@property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --gradient-angle-offset {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --gradient-percent {
+    syntax: "<percentage>";
+    initial-value: 5%;
+    inherits: false;
+}
+
+@property --gradient-shine {
+    syntax: "<color>";
+    initial-value: white;
+    inherits: false;
+}
+
+@keyframes gradient-angle {
+    to {
+        --gradient-angle: 360deg;
+    }
+}
+
+@keyframes shimmer {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Gallery Section */
+.gallery-controls,
+.tracks-controls {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 0 auto 30px auto;
+    width: fit-content;
+    flex-wrap: wrap;
+    padding: 8px;
+    border-radius: 50px;
+    position: relative;
+    z-index: 0;
+
+    /* Animated Border Styles */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+    /* Transparent border for gradient */
+
+    /* Background with Animated Gradient Border */
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FFD700 var(--gradient-percent),
+            /* Gold */
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            #FFD700 calc(var(--gradient-percent) * 3),
+            /* Gold */
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+
+    box-shadow: inset 0 0 0 1px #333;
+    /* Inner border look */
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine;
+}
+
+/* Pseudo-elements for Shine Effect */
+.gallery-controls::before,
+.gallery-controls::after,
+.tracks-controls::before,
+.tracks-controls::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.gallery-controls::before,
+.tracks-controls::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+}
+
+.gallery-controls::after,
+.tracks-controls::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            #FFD700,
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+/* Theme Overrides for Tracks Controls */
+.tracks-controls.theme-spotify {
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #1DB954 var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            #1DB954 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+}
+
+.tracks-controls.theme-spotify::after {
+    background: linear-gradient(-50deg,
+            transparent,
+            #1DB954,
+            transparent);
+}
+
+.tracks-controls.theme-soundcloud {
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #ff5500 var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            #ff5500 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+}
+
+.tracks-controls.theme-soundcloud::after {
+    background: linear-gradient(-50deg,
+            transparent,
+            #ff5500,
+            transparent);
+}
+
+.tracks-controls.theme-youtube {
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FF0000 var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            #FF0000 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+}
+
+.tracks-controls.theme-youtube::after {
+    background: linear-gradient(-50deg,
+            transparent,
+            #FF0000,
+            transparent);
+}
+
+/* Animation Control */
+.gallery-controls,
+.gallery-controls::before,
+.gallery-controls::after,
+.tracks-controls,
+.tracks-controls::before,
+.tracks-controls::after {
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+.gallery-controls:hover,
+.gallery-controls:hover::before,
+.gallery-controls:hover::after,
+.tracks-controls:hover,
+.tracks-controls:hover::before,
+.tracks-controls:hover::after {
+    animation-play-state: running;
+}
+
+.gallery-controls:hover,
+.tracks-controls:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #FFA500;
+    /* Orange/Gold Shine */
+}
+
+.slider-bg {
+    position: absolute;
+    top: 8px;
+    /* Matches padding */
+    left: 8px;
+    /* Initial position, will be updated by JS */
+    height: calc(100% - 16px);
+    /* Full height minus padding */
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    border-radius: 40px;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* Smooth sliding (slower) */
+    z-index: 0;
+    width: 0;
+    /* Initial width, will be updated by JS */
+}
+
+.gallery-controls .btn-toggle,
+.tracks-controls .btn-toggle {
+    border: none;
+    background: transparent !important;
+    /* Ensure transparent */
+    color: #888;
+    border-radius: 40px;
+    padding: 12px 30px;
+    /* Increased padding */
+    transition: color 0.3s ease;
+    /* Only animate color */
+    font-size: 1.1rem;
+    /* Increased font size */
+    position: relative;
+    z-index: 1;
+    /* Above slider */
+}
+
+.gallery-controls .btn-toggle:hover,
+.tracks-controls .btn-toggle:hover {
+    background: transparent;
+    color: #fff;
+    box-shadow: none;
+    transform: none;
+}
+
+.gallery-controls .btn-toggle.active,
+.tracks-controls .btn-toggle.active {
+    background: transparent;
+    /* No background change */
+    color: #000;
+    /* Text color on gold */
+    box-shadow: none;
+    transform: none;
+}
+
+.gallery-sub-controls {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 0 auto 40px auto;
+    width: fit-content;
+    flex-wrap: wrap;
+    background: #111;
+    padding: 8px;
+    /* Increased padding */
+    border-radius: 50px;
+    border: 1px solid #333;
+    position: relative;
+    /* For slider positioning */
+    z-index: 0;
+}
+
+.gallery-sub-controls .slider-bg {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    height: calc(100% - 16px);
+    border-radius: 40px;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 0;
+    width: 0;
+    /* Background color will be set by JS */
+}
+
+.gallery-sub-controls .btn-toggle {
+    border: none;
+    background: transparent !important;
+    color: #888;
+    border-radius: 40px;
+    padding: 8px 20px;
+    /* Increased padding */
+    transition: color 0.3s ease;
+    font-size: 1rem;
+    /* Increased font size */
+    position: relative;
+    z-index: 1;
+}
+
+.gallery-sub-controls .btn-toggle:hover {
+    background: transparent;
+    color: #fff;
+    box-shadow: none;
+    transform: none;
+}
+
+.btn-sm {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+}
+
+/* Specific Styles for Motions Submenu - White Animated Border */
+#motions-categories {
+    /* Animated Border Styles */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+    /* Transparent border for gradient */
+
+    /* Background with Animated White Gradient Border */
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #ffffff var(--gradient-percent),
+            /* White */
+            transparent calc(var(--gradient-percent) * 2)) border-box !important;
+
+    box-shadow: inset 0 0 0 1px #333;
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent;
+}
+
+#motions-categories:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    animation-play-state: running;
+}
+
+#motions-categories {
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+/* Slider do submenu Motion com sombra */
+#motions-categories .slider-bg {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* Sombra externa e reflexo interno */
+}
+
+/* Colorful Motions Submenu - Slider Effect */
+#motions-categories .btn-toggle {
+    /* Inherits base styles from .gallery-sub-controls .btn-toggle */
+    font-weight: bold;
+    opacity: 0.7;
+    color: #888;
+    /* Gray text for inactive */
+}
+
+#motions-categories .btn-toggle:hover {
+    opacity: 1;
+    color: #fff;
+    transform: none;
+    box-shadow: none;
+}
+
+#motions-categories .btn-toggle.active {
+    opacity: 1;
+    color: #fff;
+    /* White text on colored slider */
+}
+
+/* Specific Colors for Motions Categories - Handled by JS for Slider, here just text/hover effects if needed */
+/* We remove the background definitions here as they will be applied to the slider via JS */
+
+/* NikBass - texto preto quando ativo (pressionado) */
+#motions-categories .btn-toggle[data-category="nikbass"].active {
+    color: #000 !important;
+    /* Black text for better contrast on gold background when active */
+}
+
+
+/* Efeito de sombra colorida ao hover - igual ao Presskit */
+#motions-categories .btn-toggle[data-category="festas"]:hover,
+#motions-categories .btn-toggle[data-category="festas"].active {
+    box-shadow: 0 5px 15px rgba(0, 82, 212, 0.4);
+    /* Blue glow - igual 2025 */
+}
+
+#motions-categories .btn-toggle[data-category="nikbass"]:hover,
+#motions-categories .btn-toggle[data-category="nikbass"].active {
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+    /* Gold glow - Dourado */
+}
+
+#motions-categories .btn-toggle[data-category="horus"]:hover,
+#motions-categories .btn-toggle[data-category="horus"].active {
+    box-shadow: 0 5px 15px rgba(203, 45, 62, 0.4);
+    /* Red glow - igual 2023 */
+}
+
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 8px;
+    height: 250px;
+    position: relative;
+}
+
+.gallery-item img,
+.gallery-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.gallery-item:hover img,
+.gallery-item:hover video {
+    transform: scale(1.1);
+}
+
+/* Video & Presskit Albums - Natural Aspect Ratio */
+.gallery-item[data-album="motions"],
+.gallery-item[data-album="aftermovies"],
+.gallery-item[data-album="presskit"] {
+    height: auto;
+    min-height: 200px;
+    /* Fallback */
+}
+
+.gallery-item[data-album="motions"] video,
+.gallery-item[data-album="aftermovies"] video,
+.gallery-item[data-album="presskit"] img {
+    height: auto;
+    object-fit: contain;
+}
+
+.sticker-slot img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 1s ease-in-out;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.play-overlay i {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-left: 5px;
+    /* Optical adjustment for play icon */
+}
+
+
+
+.gallery-item.playing .play-overlay {
+    opacity: 0;
+}
+
+/* Brand Identity Section */
+.brand-identity {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    text-align: center;
+}
+
+.brand-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-top: -30px;
+    margin-bottom: 50px;
+}
+
+.brand-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.brand-item.featured {
+    width: 100%;
+}
+
+.brand-item.featured .brand-card {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(242, 201, 76, 0.05));
+    border: 2px solid var(--primary-color);
+    padding: 60px;
+}
+
+.brand-item.featured img {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.brand-item.featured h3 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.brand-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.brand-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 40px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+}
+
+.brand-card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+}
+
+.brand-info {
+    text-align: center;
+}
+
+.brand-info h3,
+.brand-info h4 {
+    color: var(--text-color);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.brand-info h4 {
+    font-size: 1.2rem;
+}
+
+.brand-info p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* New Brand Identity Interactive Viewer */
+.brand-identity .container {
+    max-width: 1100px;
+}
+
+.brand-viewer-layout {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+    position: relative;
+}
+
+.brand-main-display {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.brand-main-display img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+    transition: all 0.3s ease;
+}
+
+.brand-main-display img.typography-active {
+    transform: scale(1.4);
+}
+
+.brand-color-controls {
+    /* Animated Border Properties */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    --anim-color: white;
+    /* Default color */
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 60px;
+    padding: 15px;
+
+    border: 1px solid transparent;
+    border-radius: 50px;
+    /* Pill shape */
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            var(--anim-color) var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            var(--anim-color) calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+    box-shadow: inset 0 0 0 1px #1a1818;
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+.brand-color-controls::before,
+.brand-color-controls::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.brand-color-controls::before {
+    --size-w: calc(100% - var(--shadow-size) * 3);
+    --size-h: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size-w);
+    height: var(--size-h);
+    background: radial-gradient(circle at var(--position) var(--position),
+            var(--anim-color) calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+}
+
+.brand-color-controls::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-50deg,
+            transparent,
+            var(--anim-color),
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+.brand-color-controls:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #ffffff;
+}
+
+.brand-color-controls:hover::before,
+.brand-color-controls:hover::after {
+    animation-play-state: running;
+}
+
+.brand-color-btn {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.color-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.brand-color-btn:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.brand-color-btn.active {
+    border-color: var(--primary-color);
+    border-width: 2px;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+
+.brand-category-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 220px;
+}
+
+.brand-category-btn {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+.brand-category-btn img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    /* Dynamic coloring using drop-shadow hack for ALL states (active/inactive) */
+    /* This creates the "chapada" (flat/filled) effect requested */
+    filter: drop-shadow(0 1000px 0 var(--anim-color, #fff));
+    transform: translateY(-1000px);
+    transition: none;
+    /* Prevent jump on transform */
+}
+
+.brand-category-btn[data-category="tipografia"] img {
+    width: 110px;
+    height: 110px;
+}
+
+.brand-category-btn span {
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.brand-category-btn:hover {
+    border-color: var(--primary-color);
+    transform: translateX(-5px);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+
+.brand-category-btn:hover {
+    /* ... existing styles ... */
+    --anim-color: #FFD700 !important;
+    /* Force gold on hover */
+}
+
+.brand-category-btn:hover span {
+    color: var(--primary-color);
+}
+
+.brand-category-btn.active {
+    /* Animated Border Properties */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    --anim-color: #FFD700;
+    /* Default Gold */
+    /* Gold for active category */
+
+    border: 1px solid transparent;
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            var(--anim-color) var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            var(--anim-color) calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+    box-shadow: inset 0 0 0 1px #1a1818, 0 10px 40px rgba(212, 175, 55, 0.15);
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+/* Removed pseudo-elements for cleaner border-only effect */
+
+.brand-category-btn.active:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #ffffff;
+}
+
+
+
+.brand-category-btn.active span {
+    color: var(--anim-color);
+}
+
+/* CSS Properties for Animated Border */
+@property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --gradient-angle-offset {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --gradient-percent {
+    syntax: "<percentage>";
+    initial-value: 5%;
+    inherits: false;
+}
+
+@property --gradient-shine {
+    syntax: "<color>";
+    initial-value: white;
+    inherits: false;
+}
+
+/* Unified Toggle Container (Animated Gradient Border) */
+.brand-toggle-container {
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    --anim-color: white;
+    /* Default color */
+    isolation: isolate;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    outline-offset: 4px;
+    padding: 8px;
+    /* Adjusted padding to fit content */
+    font-family: "Inter", sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.2;
+    border: 1px solid transparent;
+    border-radius: 360px;
+    color: white;
+    background: linear-gradient(#000000, #000000) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            var(--anim-color) var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            var(--anim-color) calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+    box-shadow: inset 0 0 0 1px #1a1818;
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine;
+
+    /* Flex layout for buttons */
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 40px auto;
+    width: fit-content;
+    z-index: 0;
+}
+
+.brand-toggle-container::before,
+.brand-toggle-container::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.brand-toggle-container::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            var(--anim-color) calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+}
+
+.brand-toggle-container::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            var(--anim-color),
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+.brand-toggle-container:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: var(--anim-color);
+}
+
+.brand-toggle-container:hover::before,
+.brand-toggle-container:hover::after {
+    animation-play-state: running;
+}
+
+@keyframes gradient-angle {
+    to {
+        --gradient-angle: 360deg;
+    }
+}
+
+@keyframes shimmer {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.brand-toggle-container,
+.brand-toggle-container::before,
+.brand-toggle-container::after {
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+.brand-toggle-container.hidden {
+    display: none;
+}
+
+.slider-bg {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    height: calc(100% - 16px);
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    border-radius: 40px;
+    transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 0;
+    width: 0;
+}
+
+.brand-effect-option,
+.brand-variation-btn {
+    background: transparent !important;
+    border: none;
+    padding: 12px 30px;
+    color: #888;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    border-radius: 40px;
+    position: relative;
+    z-index: 1;
+    min-width: 100px;
+}
+
+.brand-effect-option:hover,
+.brand-variation-btn:hover {
+    color: var(--anim-color, #fff);
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+}
+
+.brand-effect-option.active,
+.brand-variation-btn.active {
+    color: #000;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+}
+
+/* Specific active states for effect toggle */
+.brand-effect-option.active-white {
+    /* Will be handled by JS updating the slider background */
+}
+
+.brand-effect-option.active-gold {
+    /* Will be handled by JS updating the slider background */
+}
+
+
+
+/* Presskit Section */
+.presskit {
+    background: linear-gradient(45deg, #111, #1a1a1a);
+    text-align: center;
+}
+
+.presskit-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 50px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.presskit-icons {
+    display: flex;
+    justify-content: center;
+    gap: 98px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.presskit-icons i {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.presskit-icons i:hover {
+    color: #fff;
+    opacity: 1;
+}
+
+.presskit-icons i.active {
+    opacity: 1;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    transform: scale(1.15);
+}
+
+.pk-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+.pk-gallery-item {
+    border-radius: 10px;
+    overflow: hidden;
+    height: 200px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.pk-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Tocando photos should fill the space */
+#content-foto-eventos .pk-gallery-item img {
+    object-fit: cover;
+}
+
+.pk-gallery-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+}
+
+.pk-gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.logo-item img {
+    object-fit: contain;
+    padding: 0;
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#content-logo-agencia {
+    justify-content: center;
+    display: flex;
+}
+
+#content-logo-agencia .logo-item img {
+    background: #000;
+}
+
+#content-logo-agencia .pk-gallery-item {
+    width: 400px;
+    height: 250px;
+}
+
+.logo-item:hover img {
+    transform: scale(1.2);
+}
+
+.logo-large img {
+    transform: scale(1.6);
+}
+
+.logo-large:hover img {
+    transform: scale(1.7);
+}
+
+.presskit-controls {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 30px auto;
+    width: fit-content;
+    flex-wrap: wrap;
+    padding: 8px;
+    border-radius: 50px;
+    position: relative;
+    z-index: 0;
+
+    /* Animated Border Styles - Copied from gallery-controls */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+    animation: gradient-angle 3s linear infinite;
+
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FFD700 var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            #FFD700 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+
+    box-shadow: inset 0 0 0 1px #333;
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine;
+}
+
+.presskit-controls::before,
+.presskit-controls::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.presskit-controls::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+}
+
+.presskit-controls::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            #FFD700,
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+.presskit-controls:hover {
+    animation-play-state: running;
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #FFA500;
+}
+
+.presskit-controls .btn-toggle {
+    border: none;
+    background: transparent !important;
+    color: #888;
+    border-radius: 40px;
+    padding: 12px 30px;
+    transition: color 0.3s ease;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.presskit-controls .btn-toggle:hover {
+    background: transparent;
+    color: #fff;
+    box-shadow: none;
+    transform: none;
+}
+
+.presskit-controls .btn-toggle.active {
+    background: transparent;
+    color: #000;
+    box-shadow: none;
+    transform: none;
+}
+
+.pk-tab-content.hidden {
+    display: none;
+}
+
+.presskit-preview {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px 0;
+}
+
+.pk-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+}
+
+.pk-item i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+
+
+.download-btn {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 0;
+    border-radius: 50px;
+    padding: 15px 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+    cursor: pointer;
+
+    /* Animated Border Styles */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+    animation: gradient-angle 3s linear infinite;
+
+    background: linear-gradient(45deg, #FFD700, #FFA500) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FFD700 var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            #FFD700 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+
+    box-shadow: inset 0 0 0 1px #333, 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine, transform, box-shadow;
+}
+
+.download-btn::before,
+.download-btn::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.download-btn::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+}
+
+.download-btn::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            #FFD700,
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+.download-btn:hover {
+    animation-play-state: running;
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #FFA500;
+    transform: scale(1.05);
+    box-shadow: inset 0 0 0 1px #333, 0 0 20px rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+}
+
+/* Contact Section */
+/* Contact Section */
+.contact-description {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: -20px auto 30px auto;
+    line-height: 1.8;
+}
+
+.contact-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    font-size: 1.1rem;
+    padding: 15px 40px;
+
+    /* Estilo similar ao menu da galeria - Borda animada dourada */
+    position: relative;
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 50px;
+
+    /* Background com gradiente dourado animado */
+    background: linear-gradient(#111, #111) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FFD700 var(--gradient-percent),
+            #FFA500 calc(var(--gradient-percent) * 2),
+            #FFD700 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+
+    box-shadow: inset 0 0 0 1px #333;
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine;
+
+    /* Valores iniciais das variáveis */
+    --gradient-percent: 5%;
+    --gradient-angle: 0deg;
+    --gradient-angle-offset: 0deg;
+    --gradient-shine: white;
+}
+
+/* Pseudo-elementos para efeito de brilho */
+.contact-cta::before,
+.contact-cta::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.contact-cta::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+}
+
+.contact-cta::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            #FFD700,
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+/* Animação */
+.contact-cta,
+.contact-cta::before,
+.contact-cta::after {
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+.contact-cta:hover,
+.contact-cta:hover::before,
+.contact-cta:hover::after {
+    animation-play-state: running;
+}
+
+.contact-cta:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #FFA500;
+}
+
+.contact-cta i {
+    font-size: 1.3rem;
+}
+
+.contact-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* New Contact Layout */
+.contact-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+    /* Increased spacing between columns */
+    margin-top: 40px;
+}
+
+.contact-left-column {
+    flex: 1;
+}
+
+/* Align content to the left in the left column */
+.contact-left-column .contact-wrapper {
+    align-items: flex-start;
+}
+
+.contact-left-column .contact-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 35px;
+    /* Increased vertical spacing between info items */
+}
+
+.contact-left-column .social-links {
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.contact-image-column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.contact-main-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.contact-main-image:hover {
+    transform: scale(1.05);
+}
+
+.contact-logo-column {
+    flex: 0 0 auto;
+    margin-top: -30px;
+    /* Move up slightly */
+}
+
+.contact-logo-animated {
+    width: 150px;
+    /* Increased size */
+    transition: transform 0.3s ease;
+    animation: colorCycle 4s infinite linear;
+}
+
+.contact-logo-animated:hover {
+    transform: scale(1.1);
+}
+
+@keyframes colorCycle {
+    0% {
+        filter: sepia(1) saturate(5) hue-rotate(0deg);
+    }
+
+    50% {
+        filter: sepia(1) saturate(5) hue-rotate(180deg);
+    }
+
+    100% {
+        filter: sepia(1) saturate(5) hue-rotate(360deg);
+    }
+}
+
+@media (max-width: 992px) {
+    .contact-layout {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .contact-left-column .contact-wrapper,
+    .contact-left-column .contact-info,
+    .contact-left-column .social-links {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contact-logo-column {
+        margin-top: 30px;
+    }
+}
+
+.contact-info {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.2rem;
+}
+
+.info-item.info-link {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.info-item.info-link:hover {
+    transform: translateY(-3px);
+}
+
+.info-item.info-link:hover i {
+    color: var(--secondary-color);
+}
+
+.info-item i {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    transform: translateY(-5px);
+}
+
+/* Instagram - Gradiente */
+.social-links a[href*="instagram"]:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #fff;
+    box-shadow: 0 5px 20px rgba(225, 48, 108, 0.4);
+}
+
+/* SoundCloud - Laranja */
+.social-links a[href*="soundcloud"]:hover {
+    background: #ff5500;
+    color: #fff;
+    box-shadow: 0 5px 20px rgba(255, 85, 0, 0.4);
+}
+
+/* Spotify - Verde */
+.social-links a[href*="spotify"]:hover {
+    background: #1DB954;
+    color: #fff;
+    box-shadow: 0 5px 20px rgba(29, 185, 84, 0.4);
+}
+
+/* Footer */
+footer {
+    padding: 30px 0;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.developer-credit {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.developer-link {
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.developer-link:hover {
+    transform: scale(1.05);
+    display: inline-block;
+}
+
+.marks-color {
+    color: #3B82F6;
+    animation: marks-glow 2s infinite alternate;
+}
+
+.beys-color {
+    color: var(--primary-color);
+    animation: beys-glow 2s infinite alternate;
+}
+
+@keyframes marks-glow {
+    0% {
+        text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+
+    100% {
+        text-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+    }
+}
+
+@keyframes beys-glow {
+    0% {
+        text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+    }
+
+    100% {
+        text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: var(--bg-dark);
+        flex-direction: column;
+        justify-content: center;
+        transition: 0.4s;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .img-border {
+        display: none;
+    }
+
+    .presskit-preview {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Logo Styles */
+.hero-logo {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto 20px auto;
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+    transition: transform 0.3s, filter 0.3s;
+    /* Gold glow */
+}
+
+.hero-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.8));
+}
+
+.logo img {
+    display: block;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.logo:hover img,
+.logo.active img {
+    transform: scale(1.1);
+    filter: brightness(0.8) sepia(1) hue-rotate(5deg) saturate(5) drop-shadow(0 0 15px #ff5500);
+}
+
+/* Color Change Animation */
+.color-change {
+    animation: color-cycle 3s infinite linear;
+    font-weight: bold;
+}
+
+@keyframes color-cycle {
+    0% {
+        color: #D4AF37;
+    }
+
+    25% {
+        color: #ffffff;
+    }
+
+    50% {
+        color: #F2C94C;
+    }
+
+    75% {
+        color: #ffcc00;
+    }
+
+    100% {
+        color: #D4AF37;
+    }
+}
+
+/* Genre Showcase Styles */
+.genre-showcase {
+    margin-top: 35px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.genre-header {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.genre-tags {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.genre-tag {
+    padding: 8px 25px;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    /* Less rounded to be different */
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    cursor: default;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.genre-tag.active {
+    background: var(--primary-color);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.genre-details {
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent);
+    border-left: 4px solid var(--primary-color);
+    padding: 20px;
+    border-radius: 0 8px 8px 0;
+}
+
+.genre-details p {
+    margin-bottom: 0 !important;
+    color: var(--text-color) !important;
+    font-size: 1rem;
+}
+
+.genre-details i {
+    color: var(--primary-color);
+    margin-right: 8px;
+}
+
+/* Tracks Section Styles */
+.tracks {
+    background-color: var(--bg-dark);
+}
+
+.tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.track-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.track-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-color);
+}
+
+.track-item iframe {
+    display: block;
+}
+
+/* Tracks Controls */
+.tracks-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.btn-toggle {
+    background: transparent;
+    border: 2px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 10px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-toggle:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.contact-cta {
+    /* Estilo similar ao menu da galeria - Borda animada dourada */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    align-self: flex-start;
+    color: #000;
+    /* Texto preto */
+
+    /* Animação de borda */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+
+    /* Background com gradiente dourado claro (em vez de preto) */
+    background: linear-gradient(45deg, #FFD700, #FFA500) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FFD700 var(--gradient-percent),
+            #FFA500 calc(var(--gradient-percent) * 2),
+            #FFD700 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+
+    box-shadow: inset 0 0 0 1px rgba(255, 215, 0, 0.3);
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine;
+
+    /* Valores iniciais das variáveis */
+    --gradient-percent: 5%;
+    --gradient-angle: 0deg;
+    --gradient-angle-offset: 0deg;
+    --gradient-shine: white;
+
+    /* Animação */
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+/* Pseudo-elementos para efeito de brilho */
+.contact-cta::before,
+.contact-cta::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.contact-cta::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+.contact-cta::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            #FFD700,
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+.contact-cta:hover,
+.contact-cta:hover::before,
+.contact-cta:hover::after {
+    animation-play-state: running;
+}
+
+.contact-cta:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #FFA500;
+}
+
+.btn-toggle.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Platform Specific Button Colors */
+#btn-spotify {
+    border-color: #1DB954;
+    color: #1DB954;
+}
+
+#btn-spotify:hover {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #1DB954;
+    box-shadow: 0 0 15px rgba(29, 185, 84, 0.5);
+}
+
+#btn-spotify.active {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #1DB954;
+    box-shadow: none;
+}
+
+#btn-soundcloud {
+    border-color: #ff5500;
+    color: #ff5500;
+}
+
+#btn-soundcloud:hover {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #ff5500;
+    box-shadow: 0 0 15px rgba(255, 85, 0, 0.5);
+}
+
+#btn-soundcloud.active {
+    background-color: transparent !important;
+    /* Let slider handle bg */
+    color: #fff !important;
+    /* Black text on gold slider */
+    border-color: #ff5500;
+    box-shadow: none;
+}
+
+#btn-youtube {
+    border-color: #FF0000;
+    color: #FF0000;
+}
+
+#btn-youtube:hover {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #FF0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+#btn-youtube.active {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #FF0000;
+    box-shadow: none;
+}
+
+/* Sets Buttons - YouTube */
+#btn-sets-youtube {
+    border-color: #FF0000;
+    color: #FF0000;
+}
+
+#btn-sets-youtube.active {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #FF0000;
+    box-shadow: none;
+}
+
+#btn-sets-youtube:hover {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #FF0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+/* Sets Buttons - SoundCloud */
+#btn-sets-soundcloud {
+    border-color: #ff5500;
+    color: #ff5500;
+}
+
+#btn-sets-soundcloud:hover {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #ff5500;
+    box-shadow: 0 0 15px rgba(255, 85, 0, 0.5);
+}
+
+#btn-sets-soundcloud.active {
+    background-color: transparent !important;
+    color: #fff !important;
+    border-color: #ff5500;
+    box-shadow: none;
+}
+
+.show-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.track-hidden {
+    display: none;
+}
+
+/* Event Section */
+#event {
+    background: #111;
+    padding: 80px 0;
+}
+
+.event-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.event-image {
+    flex: 1;
+    max-width: 350px;
+    min-width: 300px;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.image-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+/* Carousel Styles */
+.event-carousel {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.event-slider {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.event-item {
+    display: none;
+    animation: fadeEffect 0.5s;
+}
+
+.event-item.active {
+    display: block;
+}
+
+@keyframes fadeEffect {
+    from {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.carousel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--primary-color);
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%;
+    transition: 0.3s;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-btn:hover {
+    background: var(--primary-color);
+    color: var(--bg-dark);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
+/* General Active/Hover State for Toggle Buttons (excluding Presskit specific) */
+.gallery-sub-controls .btn-toggle:hover,
+.gallery-sub-controls .btn-toggle.active {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    border-color: transparent;
+}
+
+/* Specific Styles for Presskit Submenu - White Animated Border */
+#presskit-years {
+    /* Animated Border Styles */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+    /* Transparent border for gradient */
+
+    /* Background with Animated White Gradient Border */
+    /* Background with Animated White Gradient Border */
+    background: linear-gradient(#111, #111) padding-box, conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)), transparent, #ffffff var(--gradient-percent), transparent calc(var(--gradient-percent) * 2)) border-box !important;
+
+    box-shadow: inset 0 0 0 1px #333;
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent;
+}
+
+#presskit-years:hover {
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    animation-play-state: running;
+}
+
+#presskit-years {
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+}
+
+/* Specific Colorful Styles for Presskit Years */
+#presskit-years .btn-toggle[data-year="2025"]:hover,
+#presskit-years .btn-toggle[data-year="2025"].active {
+    background: linear-gradient(45deg, #0052D4, #4364F7);
+    /* Strong Blue */
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 82, 212, 0.4);
+}
+
+#presskit-years .btn-toggle[data-year="2024"]:hover,
+#presskit-years .btn-toggle[data-year="2024"].active {
+    background: linear-gradient(45deg, #004600, #008000);
+    /* Darker Green */
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 128, 0, 0.4);
+}
+
+#presskit-years .btn-toggle[data-year="2023"]:hover,
+#presskit-years .btn-toggle[data-year="2023"].active {
+    background: linear-gradient(45deg, #cb2d3e, #ef473a);
+    /* Strong Red */
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(203, 45, 62, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .event-carousel {
+        flex-direction: column;
+    }
+
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .prev-btn {
+        left: -10px;
+    }
+
+    .next-btn {
+        right: -10px;
+    }
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dot.active {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    transform: scale(1.2);
+}
+
+.event-details {
+    flex: 1;
+    max-width: 600px;
+    text-align: left;
+}
+
+.event-details h3 {
+    margin-bottom: 20px;
+}
+
+.event-title {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.event-brand {
+    font-size: 1rem;
+    font-weight: 600;
+    animation: color-cycle 3s infinite linear;
+    letter-spacing: 1px;
+}
+
+.event-edition {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+}
+
+.event-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: var(--text-light);
+}
+
+.event-info {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.event-info li {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.event-info i {
+    color: var(--primary-color);
+    width: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .event-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .event-details {
+        text-align: center;
+    }
+
+    .event-info li {
+        justify-content: center;
+    }
+}
+
+/* Agenda Section */
+.agenda .highlight {
+    color: #3B82F6;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.agenda-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.agenda-image {
+    flex: 1;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.agenda-list {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.agenda-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.agenda-item:hover {
+    transform: translateY(-5px);
+    border-color: #3B82F6;
+}
+
+.agenda-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #3B82F6;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    min-width: 70px;
+    margin-right: 20px;
+}
+
+.agenda-date .day {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.agenda-date .month {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.agenda-details {
+    flex: 1;
+    text-align: left;
+}
+
+.agenda-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.agenda-details p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.agenda-details p i {
+    color: #3B82F6;
+    margin-right: 5px;
+}
+
+.agenda-action .btn-outline {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* CSS para aplicar no botão preview */
+/* Note: @property and @keyframes are already defined in the file and match the user request. */
+
+.elementor-button-preview {
+    --animation: gradient-angle linear infinite !important;
+    --duration: 3s !important;
+    --shadow-size: 2px !important;
+    isolation: isolate !important;
+    position: relative !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    outline-offset: 4px !important;
+    padding: 1.25rem 2.5rem !important;
+    font-family: "Inter", sans-serif !important;
+    font-size: 1.125rem !important;
+    line-height: 1.2 !important;
+    border: 1px solid transparent !important;
+    border-radius: 360px !important;
+    color: white !important;
+    background: linear-gradient(#000000, #000000) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            blue var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            blue calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box !important;
+    box-shadow: inset 0 0 0 1px #1a1818 !important;
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1) !important;
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine !important;
+}
+
+.elementor-button-preview::before,
+.elementor-button-preview::after,
+.elementor-button-preview span::before {
+    content: "" !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    inset-inline-start: 50% !important;
+    inset-block-start: 50% !important;
+    translate: -50% -50% !important;
+    z-index: -1 !important;
+}
+
+.elementor-button-preview::before {
+    --size: calc(100% - var(--shadow-size) * 3) !important;
+    --position: 2px !important;
+    --space: calc(var(--position) * 2) !important;
+    width: var(--size) !important;
+    height: var(--size) !important;
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box !important;
+    background-size: var(--space) var(--space) !important;
+    background-repeat: space !important;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black) !important;
+    border-radius: inherit !important;
+    opacity: 0.4 !important;
+}
+
+.elementor-button-preview::after {
+    --animation: shimmer linear infinite !important;
+    width: 100% !important;
+    aspect-ratio: 1 !important;
+    background: linear-gradient(-50deg,
+            transparent,
+            blue,
+            transparent) !important;
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black) !important;
+    opacity: 0.6 !important;
+}
+
+.elementor-button-preview span {
+    z-index: 1 !important;
+    position: relative !important;
+}
+
+.elementor-button-preview span::before {
+    size: calc(100% + 1rem) !important;
+    width: 240px !important;
+    height: 90px !important;
+    box-shadow: inset 0 -1ex 2rem 4px #8484ff70 !important;
+    opacity: 0 !important;
+    transition: opacity 800ms cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.elementor-button-preview:hover,
+.elementor-button-preview:focus-visible {
+    --gradient-percent: 20% !important;
+    --gradient-angle-offset: 95deg !important;
+    --gradient-shine: #8484ff !important;
+}
+
+.elementor-button-preview:hover span::before {
+    opacity: 1 !important;
+}
+
+.elementor-button-preview,
+.elementor-button-preview::before,
+.elementor-button-preview::after {
+    animation: var(--animation) var(--duration),
+        var(--animation) calc(var(--duration) / 0.4) reverse paused !important;
+    animation-composition: add !important;
+}
+
+.elementor-button-preview:hover,
+.elementor-button-preview:hover::before,
+.elementor-button-preview:hover::after {
+    animation-play-state: running !important;
+}
+
+/* Refined Button Styles */
+.btn-preview-gold,
+.btn-preview-white {
+    /* Remove inner effects */
+}
+
+.btn-preview-white::before,
+.btn-preview-white::after,
+.btn-preview-white span::before {
+    display: none !important;
+}
+
+/* Gold Variant */
+.btn-preview-gold {
+    color: #000 !important;
+    background: linear-gradient(45deg, #FFD700, #FFA500) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #FFD700 var(--gradient-percent),
+            #FFA500 calc(var(--gradient-percent) * 2),
+            #FFD700 calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box !important;
+}
+
+/* White Variant */
+.btn-preview-white {
+    border: 2px solid transparent !important;
+    /* Emphasize border */
+    background: linear-gradient(#000000, #000000) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #ffffff var(--gradient-percent),
+            #cccccc calc(var(--gradient-percent) * 2),
+            #ffffff calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box !important;
+}
+
+/* White Animated Button */
+.btn-white-animated {
+    width: fit-content;
+    margin: 20px auto 0;
+    display: block;
+    position: relative;
+    z-index: 0;
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+    cursor: pointer;
+    font-size: 0.9rem;
+
+    /* Animated Border Styles */
+    --animation: gradient-angle linear infinite;
+    --duration: 3s;
+    --shadow-size: 2px;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid transparent;
+    animation: gradient-angle 3s linear infinite;
+
+    background: linear-gradient(45deg, #ffffff, #e0e0e0) padding-box,
+        conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            #ffffff var(--gradient-percent),
+            #a0a0a0 calc(var(--gradient-percent) * 2),
+            #ffffff calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)) border-box;
+
+    box-shadow: inset 0 0 0 1px #333, 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine, transform, box-shadow;
+}
+
+.btn-white-animated::before,
+.btn-white-animated::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.btn-white-animated::before {
+    --size: calc(100% - var(--shadow-size) * 3);
+    --position: 2px;
+    --space: calc(var(--position) * 2);
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+            white calc(var(--position) / 4),
+            transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+            black,
+            transparent 10% 90%,
+            black);
+    border-radius: inherit;
+    opacity: 0.4;
+}
+
+.btn-white-animated::after {
+    --animation: shimmer linear infinite;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg,
+            transparent,
+            #ffffff,
+            transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+}
+
+.btn-white-animated:hover {
+    animation-play-state: running;
+    --gradient-percent: 20%;
+    --gradient-angle-offset: 95deg;
+    --gradient-shine: #a0a0a0;
+    transform: scale(1.05);
+    box-shadow: inset 0 0 0 1px #333, 0 0 20px rgba(255, 255, 255, 0.3);
+}
