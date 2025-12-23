@@ -2364,10 +2364,12 @@ footer {
     }
 
     .navbar .container {
-        justify-content: space-between;
+        justify-content: center;
+        /* Centering content */
         align-items: center;
+        gap: 15px;
+        /* Spacing between logo and links */
         width: 95%;
-        /* Use slightly more width on mobile */
     }
 
     /* Mobile Quick Links - Visible on Mobile */
@@ -2421,6 +2423,76 @@ footer {
 
     .hero h1 {
         font-size: 3rem;
+    }
+
+    .hero-btns {
+        gap: 10px;
+        /* Smaller gap on mobile */
+        flex-direction: column;
+        /* Stack buttons on mobile */
+        align-items: center;
+    }
+
+    .hero-btns .btn {
+        width: 80%;
+        /* Consistent width for stacked buttons */
+        max-width: 300px;
+        display: flex;
+        /* Ensure flex for centering span */
+        justify-content: center;
+    }
+
+    /* Override Elementor Button Styles for Hero on Mobile */
+    .hero-btns .elementor-button-preview {
+        padding: 0.8rem 1.5rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    .hero-btns .elementor-button-preview {
+        padding: 0.8rem 1.5rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Force Music Buttons to be in one row on mobile */
+    .tracks-controls {
+        flex-wrap: nowrap !important;
+        /* Prevent wrapping */
+        gap: 5px !important;
+        /* Tiny gap */
+        width: 100%;
+        justify-content: center;
+        padding: 0 5px;
+        /* Ensure some edge spacing */
+    }
+
+    /* Specific fix for Sets Controls (User request 2025-12-23) */
+    #sets-controls {
+        width: fit-content !important;
+        margin: 30px auto !important;
+        padding: 5px !important;
+    }
+
+    /* Sets Buttons Specific Sizing (Larger) */
+    #sets-controls .btn-toggle {
+        padding: 15px 30px !important;
+        /* Even larger padding */
+        font-size: 1.1rem !important;
+        /* Larger text */
+    }
+
+    .tracks-controls .btn-toggle {
+        padding: 10px 14px !important;
+        /* Increased padding */
+        font-size: 0.85rem !important;
+        /* Increased font size */
+        white-space: nowrap;
+        min-width: auto;
+        flex: 0 1 auto;
+    }
+
+    .tracks-controls .btn-toggle i {
+        margin-right: 5px;
+        /* Restored icon spacing */
     }
 
     .about-grid {
