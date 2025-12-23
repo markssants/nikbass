@@ -2430,6 +2430,16 @@ footer {
         text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
     }
 
+    .mobile-quick-links a.active {
+        color: var(--primary-color);
+        text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+        font-weight: 900;
+    }
+
+    footer {
+        display: none !important;
+    }
+
     .nav-links.active {
         right: 0;
     }
@@ -2638,12 +2648,6 @@ footer {
         /* Limit width */
     }
 
-    /* Reduce default logo size on mobile (User Request) */
-    .brand-main-display img:not(.typography-active) {
-        max-width: 60% !important;
-        max-height: 200px !important;
-    }
-
     /* 2. Brand Category Controls (Middle) - "Em baixo os 2" */
     .brand-category-controls {
         order: 2 !important;
@@ -2699,6 +2703,21 @@ footer {
         height: 35px !important;
         flex: 0 0 auto !important;
         /* Prevent squishing */
+    }
+
+    /* Brand Variation Controls - Reduce size on mobile */
+    #brand-variation-controls {
+        width: 90% !important;
+        max-width: 100% !important;
+        margin: 20px auto !important;
+        padding: 5px !important;
+    }
+
+    .brand-variation-btn {
+        padding: 8px 15px !important;
+        font-size: 0.85rem !important;
+        min-width: 60px !important;
+        letter-spacing: 1px !important;
     }
 
 
@@ -3292,7 +3311,8 @@ footer {
         position: absolute;
         top: auto;
         /* Reset vertical center */
-        bottom: -45px;
+        bottom: -65px;
+        /* Increased from -45px for more spacing */
         /* Align with indicators */
         transform: none;
         /* Reset vertical center */
@@ -3319,9 +3339,13 @@ footer {
         /* Position further right of center dots */
     }
 
-    /* Pull indicators up into the line */
+    /* Adjust indicators position to align with navigation buttons */
     .carousel-indicators {
-        margin-top: -30px !important;
+        margin-top: -10px !important;
+        /* Adjusted to middle position */
+        /* Changed from -30px to push down */
+        margin-bottom: 20px !important;
+        /* Add spacing below indicators */
         position: relative;
         z-index: 5;
     }
@@ -3338,6 +3362,24 @@ footer {
         width: 100% !important;
         /* Full width for details */
         padding: 0 10px;
+        text-align: center !important;
+    }
+
+    .event-title,
+    .event-description,
+    .event-info {
+        text-align: center !important;
+        align-items: center !important;
+    }
+
+    .event-info li {
+        justify-content: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .btn-preview-gold {
+        margin: 0 auto !important;
     }
 }
 

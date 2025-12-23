@@ -115,6 +115,21 @@ document.addEventListener('DOMContentLoaded', () => {
             navSlider.style.opacity = '0';
         }
 
+        // Mobile Quick Links Active State (User Request 2025-12-23)
+        const mobileQuickLinks = document.querySelectorAll('.mobile-quick-links a');
+        mobileQuickLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href').substring(1); // Remove #
+
+            // Apply active state based on section mapping
+            if ((current === 'about' && href === 'about') ||
+                (current === 'agenda' && href === 'agenda') ||
+                (current === 'presskit' && href === 'presskit') ||
+                (current === 'contact' && href === 'contact')) {
+                link.classList.add('active');
+            }
+        });
+
         // Logo Active State
         const logo = document.querySelector('.logo');
         if (current === 'home') {
@@ -1279,6 +1294,37 @@ brandCategoryBtns.forEach(btn => {
 
             // Show all variations
             brandVariationBtns.forEach(btn => btn.style.display = 'block');
+        }
+
+        // Adjust container width based on visible buttons (mobile optimization)
+        if (window.innerWidth <= 768) {
+            const visibleButtons = Array.from(brandVariationBtns).filter(btn => btn.style.display !== 'none');
+            const buttonCount = visibleButtons.length;
+
+
+            if (buttonCount === 1) {
+                brandVariationControls.style.width = '25%';
+                brandVariationControls.style.maxWidth = '130px';
+            } else if (buttonCount === 4) {
+                brandVariationControls.style.width = '75%';
+                brandVariationControls.style.maxWidth = '90%';
+            }
+
+            // Update slider after width adjustment
+            setTimeout(() => {
+                const activeVarBtn = document.querySelector('.brand-variation-btn.active') || brandVariationBtns[0];
+                if (activeVarBtn && activeVarBtn.style.display !== 'none') {
+                    const slider = brandVariationControls.querySelector('.slider-bg');
+                    if (slider) {
+                        slider.style.width = `${activeVarBtn.offsetWidth}px`;
+                        slider.style.left = `${activeVarBtn.offsetLeft}px`;
+                    }
+                }
+            }, 50);
+        } else {
+            // Reset for desktop
+            brandVariationControls.style.width = '';
+            brandVariationControls.style.maxWidth = '';
         }
 
         // Initialize slider for variation controls
