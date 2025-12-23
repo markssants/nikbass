@@ -7,12 +7,30 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.addEventListener('click', () => {
         navLinks.classList.toggle('active');
         hamburger.classList.toggle('toggle');
+
+        // Icon Toggle Logic
+        const icon = hamburger.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
     });
 
     // Close menu when clicking a link
     links.forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
+            hamburger.classList.remove('toggle');
+
+            // Reset Icon to Hamburger
+            const icon = hamburger.querySelector('i');
+            if (icon) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
     });
 

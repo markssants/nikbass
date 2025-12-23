@@ -284,6 +284,11 @@ img {
     isolation: isolate;
 }
 
+/* Mobile Quick Links - Default Hidden */
+.mobile-quick-links {
+    display: none;
+}
+
 .nav-slider-bg {
     position: absolute;
     top: 0;
@@ -1669,6 +1674,21 @@ img {
     transform: scale(1.15);
 }
 
+@media (max-width: 768px) {
+    .presskit-icons {
+        gap: 20px;
+        width: fit-content;
+        max-width: 100%;
+        flex-wrap: wrap;
+        margin: 20px auto;
+    }
+
+    .presskit-icons i {
+        font-size: 1.5rem;
+        /* Slightly smaller icons on mobile */
+    }
+}
+
 .pk-gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2326,11 +2346,52 @@ footer {
         right: -100%;
         width: 70%;
         height: 100vh;
-        background: var(--bg-dark);
+        /* Liquid Glass Style */
+        background: rgba(10, 10, 10, 0.7);
+        /* Translucent dark base */
+        backdrop-filter: blur(20px) saturate(180%);
+        /* heavy blur */
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        /* Safari support */
         flex-direction: column;
         justify-content: center;
-        transition: 0.4s;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Smooth easing */
         border-left: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        /* Depth shadow */
+        z-index: 1500;
+    }
+
+    .navbar .container {
+        justify-content: space-between;
+        align-items: center;
+        width: 95%;
+        /* Use slightly more width on mobile */
+    }
+
+    /* Mobile Quick Links - Visible on Mobile */
+    .mobile-quick-links {
+        display: flex;
+        gap: 15px;
+        /* Increased gap slightly */
+        align-items: center;
+    }
+
+    .mobile-quick-links a {
+        font-size: 0.75rem;
+        /* Slightly larger since there are fewer links */
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.5px;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+
+    .mobile-quick-links a:hover {
+        color: var(--primary-color);
+        text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
     }
 
     .nav-links.active {
@@ -2338,7 +2399,24 @@ footer {
     }
 
     .hamburger {
-        display: block;
+        display: none;
+        /* User requested to remove hamburger on 2025-12-23 */
+        /* display: block; */
+        /* Original */
+        z-index: 2000;
+        /* Higher than nav-links */
+        position: relative;
+    }
+
+    .hamburger i {
+        font-size: 2rem;
+        color: var(--primary-color);
+        transition: 0.3s;
+    }
+
+    .hamburger.toggle i {
+        color: #fff;
+        /* Optional: Change color when open */
     }
 
     .hero h1 {
@@ -3095,6 +3173,36 @@ footer {
 .agenda-item:hover {
     transform: translateY(-5px);
     border-color: #3B82F6;
+}
+
+@media (max-width: 768px) {
+    .agenda-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .agenda-image,
+    .agenda-list {
+        max-width: 100%;
+        min-width: unset;
+        width: 100%;
+    }
+
+    /* Optional: Ensure items inside list don't overflow */
+    .agenda-item {
+        width: 100%;
+    }
+
+    /* Reduce 'Ingressos' button size on mobile */
+    .agenda-action .elementor-button-preview {
+        padding: 0.8rem 1.5rem !important;
+        /* Smaller padding */
+        font-size: 0.85rem !important;
+        /* Smaller font */
+        width: auto !important;
+        /* Prevent full width if set */
+    }
 }
 
 .agenda-date {
