@@ -172,11 +172,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Wait, we need to initialize the hidden state first.
         }
 
-        // Initialize: Hide tracks > 6
+        // Initialize: Hide tracks based on device width
+        // Mobile (< 768px): Show 4
+        // Desktop: Show 6
+        const isMobile = window.innerWidth <= 768;
+        const initialLimit = isMobile ? 4 : 6;
+
         [tracksSoundcloud, tracksSpotify, tracksYoutube].forEach(container => {
             const tracks = container.querySelectorAll('.track-item');
             tracks.forEach((track, index) => {
-                if (index >= 6) {
+                if (index >= initialLimit) {
                     track.classList.add('track-hidden');
                 }
             });

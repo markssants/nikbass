@@ -2457,12 +2457,12 @@ footer {
     .tracks-controls {
         flex-wrap: nowrap !important;
         /* Prevent wrapping */
-        gap: 5px !important;
-        /* Tiny gap */
+        gap: 3px !important;
+        /* Tighter gap */
         width: 100%;
         justify-content: center;
-        padding: 0 5px;
-        /* Ensure some edge spacing */
+        padding: 0;
+        /* Remove padding to use full width */
     }
 
     /* Specific fix for Sets Controls (User request 2025-12-23) */
@@ -2481,18 +2481,41 @@ footer {
     }
 
     .tracks-controls .btn-toggle {
-        padding: 10px 14px !important;
-        /* Increased padding */
-        font-size: 0.85rem !important;
-        /* Increased font size */
+        padding: 14px 4px !important;
+        /* Slightly tighter horizontal padding */
+        font-size: 0.95rem !important;
+        /* Even larger font */
         white-space: nowrap;
         min-width: auto;
-        flex: 0 1 auto;
+        flex: 1 1 auto;
+        /* Allow growth evenly */
+        /* Ensure content is centered within the stretched button */
+        display: inline-flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
 
     .tracks-controls .btn-toggle i {
-        margin-right: 5px;
-        /* Restored icon spacing */
+        margin-right: -4px !important;
+        /* Negative margin to remove HTML space gap */
+    }
+
+    .tracks-controls .btn-toggle i {
+        margin-right: -4px !important;
+        /* Negative margin to remove HTML space gap */
+    }
+
+    /* Sets Videos Layout - Side-by-Side (User request 2025-12-23) */
+    #sets-youtube {
+        grid-template-columns: 1fr 1fr !important;
+        /* Force 2 columns */
+        gap: 10px !important;
+        /* Reduced vertical/horizontal gap */
+    }
+
+    #sets-youtube iframe {
+        height: 150px !important;
+        /* maintain aspect ratio approx */
     }
 
     .about-grid {
@@ -2936,7 +2959,7 @@ footer {
 
 .event-image {
     flex: 1;
-    max-width: 350px;
+    max-width: 550px;
     min-width: 300px;
 }
 
@@ -3088,20 +3111,71 @@ footer {
 @media (max-width: 768px) {
     .event-carousel {
         flex-direction: column;
+        margin-bottom: 50px !important;
+        /* Visual space */
+        position: relative;
     }
 
     .carousel-btn {
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+        top: auto;
+        /* Reset vertical center */
+        bottom: -45px;
+        /* Align with indicators */
+        transform: none;
+        /* Reset vertical center */
+        width: 35px;
+        /* Slightly smaller */
+        height: 35px;
+        background: transparent;
+        /* Clean look */
+        border: 1px solid var(--primary-color);
+        /* Add border for visibility */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
     }
 
     .prev-btn {
-        left: -10px;
+        left: calc(50% - 110px) !important;
+        /* Position further left of center dots */
     }
 
     .next-btn {
-        right: -10px;
+        right: calc(50% - 110px) !important;
+        /* Position further right of center dots */
+    }
+
+    /* Pull indicators up into the line */
+    .carousel-indicators {
+        margin-top: -30px !important;
+        position: relative;
+        z-index: 5;
+    }
+
+    /* Stack Event Content (User Request 2025-12-23) */
+    .event-content {
+        flex-direction: column !important;
+        align-items: center;
+        text-align: center;
+        /* Optional: centers text if stacked */
+    }
+
+    .event-details {
+        width: 100% !important;
+        /* Full width for details */
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Resize Event Video/Image on Mobile - Drastically Reduced (3x) -> Increased */
+    .event-image {
+        max-width: 100% !important;
+        min-width: unset !important;
+        margin: 0 auto 20px auto;
     }
 }
 
@@ -3176,17 +3250,30 @@ footer {
 }
 
 .event-info li {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
+    font-size: 0.95rem;
+    color: #ccc;
     display: flex;
-    align-items: center;
-    gap: 15px;
+    align-items: flex-start;
+    gap: 10px;
+
+    /* Styling as semi-transparent button (User Request 2025-12-23) */
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: fit-content;
+    /* Wrap content */
+    margin-bottom: 10px;
+    /* Space between items */
 }
 
-.event-info i {
+.event-info li i {
     color: var(--primary-color);
-    width: 20px;
-    text-align: center;
+    margin-top: 4px;
+    /* Align icon better visually with text block */
+}
+
+text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -3566,4 +3653,22 @@ footer {
     --gradient-shine: #a0a0a0;
     transform: scale(1.05);
     box-shadow: inset 0 0 0 1px #333, 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Footer Visibility Logic (User Request 2025-12-23) */
+.container2 {
+    display: none;
+    /* Hidden on desktop */
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .container2 {
+        display: block;
+        /* Visible on mobile */
+    }
+
+}
 }
