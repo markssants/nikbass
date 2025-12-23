@@ -1421,6 +1421,11 @@ img {
     animation-composition: add;
 }
 
+/* Presskit Controls Mobile Icons Default */
+.presskit-controls .btn-toggle .mobile-icon {
+    display: none;
+}
+
 /* Removed pseudo-elements for cleaner border-only effect */
 
 .brand-category-btn.active:hover {
@@ -1676,7 +1681,7 @@ img {
 
 @media (max-width: 768px) {
     .presskit-icons {
-        gap: 20px;
+        gap: 30px;
         width: fit-content;
         max-width: 100%;
         flex-wrap: wrap;
@@ -1724,6 +1729,35 @@ img {
     border-color: var(--primary-color);
     box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
 }
+
+@media (max-width: 768px) {
+    #content-foto-fotos .pk-gallery-item {
+        height: auto !important;
+        aspect-ratio: 1/1 !important;
+    }
+
+    #content-foto-fotos .pk-gallery-item img {
+        object-fit: cover !important;
+    }
+
+    /* Rectangular Logos for Mobile */
+    #content-logo-nikbass .pk-gallery-item,
+    #content-logo-agencia .pk-gallery-item {
+        height: auto !important;
+        aspect-ratio: 16/9 !important;
+        /* Rectangular format */
+        width: 100% !important;
+    }
+
+    #content-logo-nikbass .pk-gallery-item img,
+    #content-logo-agencia .pk-gallery-item img {
+        object-fit: contain !important;
+        /* Ensure full logo is visible */
+        background: rgba(255, 255, 255, 0.05);
+        /* Optional: maintain bg context */
+    }
+}
+
 
 .pk-gallery-item:hover img {
     transform: scale(1.1);
@@ -2544,6 +2578,44 @@ footer {
     .presskit-preview {
         flex-direction: column;
         gap: 20px;
+    }
+
+    /* Force 3 columns for gallery videos (motions/festas) on mobile */
+    .gallery-grid.mobile-grid-3 {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 5px !important;
+        /* Tighter gap for 3 columns on small screens */
+    }
+
+    .gallery-grid.mobile-grid-3 .gallery-item {
+        height: auto !important;
+        aspect-ratio: 9/16;
+        /* Vertical video format */
+    }
+
+    .gallery-grid.mobile-grid-3 .gallery-item[data-album="adesivos"] {
+        aspect-ratio: 1 / 1 !important;
+    }
+
+    .gallery-grid.mobile-grid-3 .gallery-item video,
+    .gallery-grid.mobile-grid-3 .gallery-item img {
+        object-fit: cover !important;
+        /* Fill the cell */
+    }
+
+    /* Presskit Controls Mobile Icons */
+    .presskit-controls .btn-toggle .desktop-text {
+        display: none !important;
+    }
+
+    .presskit-controls .btn-toggle .mobile-icon {
+        display: inline-block !important;
+        font-size: 1.2rem;
+    }
+
+    .presskit-controls .btn-toggle {
+        padding: 10px 15px !important;
+        /* Adjust padding for icons */
     }
 }
 
@@ -3685,8 +3757,25 @@ text-align: center;
         /* Visible on mobile */
     }
 
+    #btn-ver-mais-fotos {
+        font-size: 0.9rem !important;
+        /* Slightly smaller to fit single line */
+        white-space: nowrap;
+        /* Prevent wrapping */
+        padding: 12px 20px !important;
+        /* Adjust padding if needed */
+    }
+
+    .card-btn {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+
 }
-}
+
 
 /* Floating Tooltip for Mobile Gallery Icons */
 .mobile-tooltip {

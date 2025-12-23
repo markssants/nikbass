@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showMobileTooltip(target) {
         if (window.innerWidth > 768) return;
 
-        const textSpan = target.querySelector('.g-text');
+        const textSpan = target.querySelector('.g-text') || target.querySelector('.desktop-text');
         const text = textSpan ? textSpan.textContent.trim() : '';
 
         if (!text) return;
@@ -436,11 +436,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gallery Filtering
     const galleryBtns = document.querySelectorAll('.gallery-controls .btn-toggle');
+    const presskitControlBtns = document.querySelectorAll('.presskit-controls .btn-toggle');
     const galleryItems = document.querySelectorAll('.gallery-item');
     const presskitSubControls = document.getElementById('presskit-years');
     const presskitYearBtns = presskitSubControls ? presskitSubControls.querySelectorAll('.btn-toggle') : [];
     const motionsSubControls = document.getElementById('motions-categories');
     const motionsCategoryBtns = motionsSubControls ? motionsSubControls.querySelectorAll('.btn-toggle') : [];
+
+    if (presskitControlBtns.length > 0) {
+        presskitControlBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                showMobileTooltip(btn);
+            });
+        });
+    }
 
     if (galleryBtns.length > 0 && galleryItems.length > 0) {
 
@@ -498,6 +507,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const baixarFotosContainer = document.getElementById('baixar-fotos-container');
                 const baixarFotosSelecaoContainer = document.getElementById('baixar-fotos-selecao-container');
                 const baixarVideoContainer = document.getElementById('baixar-video-container');
+
+                // Toggle Mobile Grid Layout (3 columns for motions)
+                const galleryGrid = document.querySelector('.gallery-grid');
+                if (galleryGrid) {
+                    if (['motions', 'selecao', 'aftermovies', 'adesivos', 'presskit'].includes(filterValue)) {
+                        galleryGrid.classList.add('mobile-grid-3');
+                    } else {
+                        galleryGrid.classList.remove('mobile-grid-3');
+                    }
+                }
 
                 // Hide all buttons first
                 if (baixarFotosContainer) baixarFotosContainer.style.display = 'none';
