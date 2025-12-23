@@ -2540,8 +2540,8 @@ footer {
     }
 
     .tracks-controls .btn-toggle i {
-        margin-right: -4px !important;
-        /* Negative margin to remove HTML space gap */
+        margin-right: 2px !important;
+        /* Small positive margin for spacing */
     }
 
 
@@ -2623,9 +2623,16 @@ footer {
         font-size: 1.2rem;
     }
 
+    .presskit-controls {
+        flex-wrap: nowrap !important;
+        gap: 3px !important;
+        padding: 5px !important;
+    }
+
     .presskit-controls .btn-toggle {
-        padding: 10px 15px !important;
-        /* Adjust padding for icons */
+        padding: 8px 12px !important;
+        font-size: 0.85rem !important;
+        /* Smaller size on mobile */
     }
 
     /* Brand Viewer Mobile Layout Re-ordering (User Request) */
