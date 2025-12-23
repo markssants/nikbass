@@ -1395,3 +1395,25 @@ window.addEventListener('resize', () => {
         updateBrandToggle(activeEffBtn.parentElement, activeEffBtn, color);
     }
 });
+
+// Force Video Autoplay Logic
+document.addEventListener('DOMContentLoaded', function() {
+    const heroVideo = document.querySelector('.hero-video-bg');
+    if (heroVideo) {
+        console.log('Attempting to play hero video...');
+        heroVideo.muted = true; // Ensure muted
+        heroVideo.play().then(() => {
+            console.log('Hero video playing.');
+        }).catch(error => {
+            console.error('Hero video autoplay failed:', error);
+            // Fallback on interaction
+            const playOnInteraction = () => {
+                heroVideo.play();
+                document.removeEventListener('click', playOnInteraction);
+                document.removeEventListener('touchstart', playOnInteraction);
+            };
+            document.addEventListener('click', playOnInteraction);
+            document.addEventListener('touchstart', playOnInteraction);
+        });
+    }
+});

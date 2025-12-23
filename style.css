@@ -325,7 +325,7 @@ img {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
     /* background: url('img/hero-bg.png') no-repeat center center; */
     background: url('videos/tocando/miniatura.png') no-repeat center center/cover;
     /* background-attachment: fixed; */
@@ -335,6 +335,7 @@ img {
     justify-content: center;
     text-align: center;
     overflow: hidden;
+    padding-bottom: 30px;
 }
 
 .hero-video-bg {
