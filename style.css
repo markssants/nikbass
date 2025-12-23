@@ -2617,6 +2617,91 @@ footer {
         padding: 10px 15px !important;
         /* Adjust padding for icons */
     }
+
+    /* Brand Viewer Mobile Layout Re-ordering (User Request) */
+    .brand-viewer-layout {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+
+    /* 1. Brand Main Display (Top) */
+    .brand-main-display {
+        order: 1 !important;
+        width: 100% !important;
+        min-height: 250px !important;
+    }
+
+    .brand-main-display img.typography-active {
+        transform: scale(1) !important;
+        /* Reduce scale on mobile */
+        max-width: 80% !important;
+        /* Limit width */
+    }
+
+    /* Reduce default logo size on mobile (User Request) */
+    .brand-main-display img:not(.typography-active) {
+        max-width: 60% !important;
+        max-height: 200px !important;
+    }
+
+    /* 2. Brand Category Controls (Middle) - "Em baixo os 2" */
+    .brand-category-controls {
+        order: 2 !important;
+        flex-direction: row !important;
+        /* Side by side if fits */
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        min-width: unset !important;
+        /* Reset desktop min-width */
+        gap: 15px !important;
+    }
+
+    .brand-category-btn {
+        flex: 1 1 150px !important;
+        /* Allow growing, min 150px */
+        padding: 15px !important;
+    }
+
+    .brand-category-btn img {
+        width: 50px !important;
+        /* Smaller icons for mobile */
+        height: 50px !important;
+    }
+
+    .brand-category-btn[data-category="tipografia"] img {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    .brand-category-btn span {
+        font-size: 0.9rem !important;
+    }
+
+    /* 3. Brand Color Controls (Bottom) - "Horizontal" */
+    .brand-color-controls {
+        order: 3 !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        /* Force one row */
+        width: 100% !important;
+        min-width: unset !important;
+        justify-content: center !important;
+        padding: 10px !important;
+        gap: 5px !important;
+        /* Tighter gap */
+        overflow-x: auto !important;
+        /* Safe fallback */
+    }
+
+    .brand-color-btn {
+        width: 35px !important;
+        /* Smaller to fit */
+        height: 35px !important;
+        flex: 0 0 auto !important;
+        /* Prevent squishing */
+    }
+
+
 }
 
 /* Logo Styles */
