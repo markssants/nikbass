@@ -106,7 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.addEventListener('scroll', updateActiveState);
+    // Optimized Scroll Listener
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateActiveState();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
     // Run on load to set initial state
     updateActiveState();
 
@@ -459,10 +470,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         activeYear = presskitSubControls.querySelector('.btn-toggle.active').getAttribute('data-year');
                     }
                     galleryItems.forEach(item => {
+                        const video = item.querySelector('video');
                         if (item.getAttribute('data-album') === 'presskit' && item.getAttribute('data-year') === activeYear) {
                             item.classList.remove('hidden');
+                            if (video) { video.muted = true; video.play().catch(e => console.log('Autoplay deferred', e)); }
                         } else {
                             item.classList.add('hidden');
+                            if (video) video.pause();
                         }
                     });
 
@@ -490,10 +504,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Filter items by motions AND active category
                     galleryItems.forEach(item => {
+                        const video = item.querySelector('video');
                         if (item.getAttribute('data-album') === 'motions' && item.getAttribute('data-category') === activeCategory) {
                             item.classList.remove('hidden');
+                            if (video) { video.muted = true; video.play().catch(e => console.log('Autoplay deferred', e)); }
                         } else {
                             item.classList.add('hidden');
+                            if (video) video.pause();
                         }
                     });
 
@@ -503,10 +520,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Normal filtering for other albums
                     galleryItems.forEach(item => {
+                        const video = item.querySelector('video');
                         if (item.getAttribute('data-album') === filterValue) {
                             item.classList.remove('hidden');
+                            if (video) {
+                                video.muted = true; // Ensure muted for autoplay checks
+                                video.play().catch(e => console.log('Video autoplay prevented:', e));
+                            }
                         } else {
                             item.classList.add('hidden');
+                            if (video) {
+                                video.pause();
+                            }
                         }
                     });
                 }
@@ -525,11 +550,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const year = btn.getAttribute('data-year');
 
                     galleryItems.forEach(item => {
+                        const video = item.querySelector('video');
                         if (item.getAttribute('data-album') === 'presskit') {
                             if (item.getAttribute('data-year') === year) {
                                 item.classList.remove('hidden');
+                                if (video) { video.muted = true; video.play().catch(e => console.log('Autoplay deferred', e)); }
                             } else {
                                 item.classList.add('hidden');
+                                if (video) video.pause();
                             }
                         }
                     });
@@ -549,11 +577,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const category = btn.getAttribute('data-category');
 
                     galleryItems.forEach(item => {
+                        const video = item.querySelector('video');
                         if (item.getAttribute('data-album') === 'motions') {
                             if (item.getAttribute('data-category') === category) {
                                 item.classList.remove('hidden');
+                                if (video) { video.muted = true; video.play().catch(e => console.log('Autoplay deferred', e)); }
                             } else {
                                 item.classList.add('hidden');
+                                if (video) video.pause();
                             }
                         }
                     });
@@ -707,10 +738,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Show content
                 const target = btn.getAttribute('data-target');
                 presskitContents.forEach(content => {
+                    const videos = content.querySelectorAll('video');
                     if (content.id === target) {
                         content.classList.remove('hidden');
+                        videos.forEach(video => {
+                            video.muted = true;
+                            video.play().catch(e => console.log('Autoplay deferred', e));
+                        });
                     } else {
                         content.classList.add('hidden');
+                        videos.forEach(video => video.pause());
                     }
                 });
 
@@ -1397,7 +1434,7 @@ window.addEventListener('resize', () => {
 });
 
 // Force Video Autoplay Logic
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const heroVideo = document.querySelector('.hero-video-bg');
     if (heroVideo) {
         console.log('Attempting to play hero video...');
