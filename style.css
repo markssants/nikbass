@@ -3687,3 +3687,27 @@ text-align: center;
 
 }
 }
+
+/* Floating Tooltip for Mobile Gallery Icons */
+.mobile-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: #FFD700;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+}
+
+.mobile-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

@@ -1476,4 +1476,59 @@ document.addEventListener('DOMContentLoaded', function () {
             document.addEventListener('touchstart', playOnInteraction);
         });
     }
+
+
+    // Mobile Gallery Tooltip Logic
+    const galleryButtons = document.querySelectorAll('.gallery-controls .btn-toggle');
+
+    galleryButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Only apply on mobile/tablet
+            if (window.innerWidth <= 768) {
+                // Remove existing tooltips
+                const existingTooltip = document.querySelector('.mobile-tooltip');
+                if (existingTooltip) existingTooltip.remove();
+
+                // Get text from hidden .g-text span
+                const textSpan = btn.querySelector('.g-text');
+                const text = textSpan ? textSpan.textContent.trim() : btn.textContent.trim();
+
+                // Create tooltip
+                const tooltip = document.createElement('div');
+                tooltip.className = 'mobile-tooltip';
+                tooltip.textContent = text;
+                document.body.appendChild(tooltip);
+
+                // Position tooltip
+                const rect = btn.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+
+                // Center horizontally relative to button
+                let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                // Position above button
+                let top = rect.top - tooltipRect.height - 10;
+
+                // Ensure it stays within viewport
+                if (left < 10) left = 10;
+                if (left + tooltipRect.width > window.innerWidth - 10) {
+                    left = window.innerWidth - tooltipRect.width - 10;
+                }
+
+                tooltip.style.left = `${left + window.scrollX}px`;
+                tooltip.style.top = `${top + window.scrollY}px`;
+
+                // Show
+                requestAnimationFrame(() => {
+                    tooltip.classList.add('visible');
+                });
+
+                // Auto hide
+                setTimeout(() => {
+                    tooltip.classList.remove('visible');
+                    setTimeout(() => tooltip.remove(), 300);
+                }, 2000);
+            }
+        });
+    });
 });
