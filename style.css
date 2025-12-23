@@ -2500,9 +2500,24 @@ footer {
         /* Negative margin to remove HTML space gap */
     }
 
-    .tracks-controls .btn-toggle i {
-        margin-right: -4px !important;
-        /* Negative margin to remove HTML space gap */
+
+
+    /* Gallery Controls: Icons Only on Mobile (User Request 2025-12-23) */
+    .gallery-controls .btn-toggle .g-text {
+        display: none !important;
+    }
+
+    .gallery-controls .btn-toggle .g-icon {
+        font-size: 1.4rem;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .gallery-controls .btn-toggle {
+        padding: 12px 18px !important;
+        display: inline-flex !important;
+        justify-content: center;
+        align-items: center;
     }
 
     /* Sets Videos Layout - Side-by-Side (User request 2025-12-23) */
